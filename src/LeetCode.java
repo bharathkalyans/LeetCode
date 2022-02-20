@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Stack;
 
 public class LeetCode {
@@ -36,7 +37,7 @@ public class LeetCode {
 
         StringBuilder sb = new StringBuilder();
 
-        while (!st.isEmpty()) sb.append( st.pop());
+        while (!st.isEmpty()) sb.append(st.pop());
 
         return sb.reverse().toString();
 
