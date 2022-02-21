@@ -1,10 +1,37 @@
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
+
 
 public class LeetCode {
     public static void main(String[] args) {
-        System.out.println(removeKDigits("143299800", 2));
+
+        int[][] a = new int[][]{{1, 4}, {3, 6}, {2, 8}};
+
+        System.out.println(new LeetCode().removeCoveredIntervals(a));
     }
+
+
+    //https://leetcode.com/problems/remove-covered-intervals/
+    public int removeCoveredIntervals(int[][] intervals) {
+        int m = intervals.length;
+        if (m == 1) return 1;
+
+        Arrays.sort(intervals, (a, b) -> a[0] == b[0] ? b[1] - a[1] : a[0] - b[0]);
+        ArrayList<int[]> interval = new ArrayList<>();
+
+        for (int[] ints : intervals) {
+            if (interval.isEmpty())
+                interval.add(ints);
+            else {
+                int[] beforeInterval = interval.get(interval.size() - 1);
+                if (beforeInterval[0] <= ints[0] && beforeInterval[1] >= ints[1]) continue;
+                interval.add(ints);
+            }
+        }
+        return interval.size();
+    }
+
 
     //https://leetcode.com/problems/remove-k-digits/
     public static String removeKDigits(String str, int k) {
