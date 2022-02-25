@@ -1,13 +1,15 @@
+package contests;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 
 
-class Pair {
+class TempPair {
     char c;
     int freq;
 
-    Pair(char c, int freq) {
+    TempPair(char c, int freq) {
         this.c = c;
         this.freq = freq;
     }
@@ -39,11 +41,11 @@ public class Contest281 {
         for (char cc : string)
             ch[cc - 'a']++;
 
-        Deque<Pair> q = new ArrayDeque<>();
+        Deque<TempPair> q = new ArrayDeque<>();
 
         for (int i = 25; i >= 0; i--) {
             if (ch[i] != 0) {
-                q.add(new Pair((char) (i + 'a'), ch[i]));
+                q.add(new TempPair((char) (i + 'a'), ch[i]));
                 System.out.println("Character :: " + (char) (i + 'a') + " with Frequency :: " + ch[i]);
             }
         }
@@ -51,26 +53,26 @@ public class Contest281 {
         StringBuilder sb = new StringBuilder();
 
         while (q.size() > 1) {
-            Pair temp = q.poll();
+            TempPair temp = q.poll();
             if (!sb.isEmpty() && temp.c == sb.charAt(sb.length() - 1)) {
-                Pair temp2 = q.poll();
+                TempPair temp2 = q.poll();
                 assert temp2 != null;
                 sb.append(temp2.c);
                 if (temp2.freq - 1 != 0)
-                    q.addFirst(new Pair(temp2.c, temp2.freq - 1));
+                    q.addFirst(new TempPair(temp2.c, temp2.freq - 1));
             }
             int ff = Math.min(temp.freq, repeatLimit);
             while (ff-- > 0) sb.append(temp.c);
 
             if (temp.freq - repeatLimit > 0)
-                q.addFirst(new Pair(temp.c, temp.freq - repeatLimit));
+                q.addFirst(new TempPair(temp.c, temp.freq - repeatLimit));
 
         }
 
         System.out.println(sb.toString());
 
         if (q.size() == 1) {
-            Pair tt = q.poll();
+            TempPair tt = q.poll();
             if (!sb.isEmpty() && tt.c != sb.charAt(sb.length() - 1)) {
                 System.out.println("Element and Frequency is  :: " + tt.c + " :: " + tt.freq);
                 int gg = Math.min(tt.freq, repeatLimit);

@@ -8,7 +8,6 @@ public class LeetCode {
 
         int[][] a = new int[][]{{1, 4}, {3, 6}, {2, 8}};
 
-        System.out.println(new LeetCode().removeCoveredIntervals(a));
     }
 
 
@@ -30,8 +29,7 @@ public class LeetCode {
             if (a == b) {
                 i++;
                 j++;
-            }
-            else if (a > b) return 1;
+            } else if (a > b) return 1;
             else return -1;
         }
 

@@ -1,3 +1,5 @@
+package contests;
+
 public class ListNode {
     int val;
     ListNode next;
