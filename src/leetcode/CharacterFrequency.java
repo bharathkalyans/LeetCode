@@ -1,10 +1,10 @@
 package leetcode;
 
-public class Pair {
+public class CharacterFrequency {
     char c;
     int freq;
 
-    Pair(char cc, int ff) {
+    CharacterFrequency(char cc, int ff) {
         c = cc;
         freq = ff;
     }

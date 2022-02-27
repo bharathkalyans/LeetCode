@@ -7,16 +7,15 @@ import java.util.Stack;
 
 public class LeetCode {
     public static void main(String[] args) {
-
         int[][] a = new int[][]{{1, 4}, {3, 6}, {2, 8}};
-        System.out.println(new LeetCode().removeDuplicates("deeedbbcccbdaa", 3));
+
     }
 
 
     //https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
     public String removeDuplicates(String s, int k) {
 
-        Stack<Pair> stack = new Stack<>();
+        Stack<CharacterFrequency> stack = new Stack<>();
         StringBuilder sb = new StringBuilder();
         int n = s.length();
         for (int i = 0; i < n; i++) {
@@ -28,12 +27,12 @@ public class LeetCode {
                 if (topElementFrequency + 1 == k) continue;
                 else currentCharacterFrequency = topElementFrequency + 1;
             }
-            stack.push(new Pair(currentCharacter, currentCharacterFrequency));
+            stack.push(new CharacterFrequency(currentCharacter, currentCharacterFrequency));
             //System.out.println("Character at top is :: " + stack.peek().c + " with frequency :: " + stack.peek().freq);
         }
 
         while (stack.size() > 0) {
-            Pair temp = stack.pop();
+            CharacterFrequency temp = stack.pop();
             int frequency = temp.freq;
             char toAppendCharacter = temp.c;
             while (frequency-- > 0)
