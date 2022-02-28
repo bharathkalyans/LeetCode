@@ -1,15 +1,17 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 
 public class LeetCode {
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4}, {3, 6}, {2, 8}};
+        LinkedList<Integer> q = new LinkedList<>();
 
     }
+
+
+
 
 
     //https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
