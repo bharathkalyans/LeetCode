@@ -13,6 +13,31 @@ public class LeetCode {
     }
 
 
+    //https://www.lintcode.com/problem/641/solution/17645
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> result = new ArrayList<>();
+        List<Long> number = new ArrayList<>();
+
+        number.add((long) lower - 1);
+        for (int i : nums) {
+            if (i >= lower && i <= upper) number.add((long) i);
+        }
+        number.add((long) upper + 1);
+
+        for (int i = 1; i < number.size(); i++) {
+            String range = getRange(number.get(i - 1), number.get(i));
+            if (range.length() > 0) result.add(range);
+        }
+
+        return result;
+    }
+
+    private String getRange(long i, long j) {
+        if (i >= j - 1) return "";
+        if (i == j - 2) return (j - 1) + "";
+        return (i + 1) + "->" + (j - 1);
+    }
+
     //https://leetcode.com/problems/summary-ranges/submissions/
     public List<String> summaryRanges(int[] nums) {
         List<String> result = new ArrayList<>();
@@ -30,7 +55,6 @@ public class LeetCode {
             result.add(sb.toString());
             sb.setLength(0);
         }
-
         return result;
     }
 
