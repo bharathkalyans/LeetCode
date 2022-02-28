@@ -8,10 +8,25 @@ import java.util.Stack;
 
 public class LeetCode {
     public static void main(String[] args) {
-        int[][] a = new int[][]{{1, 4}, {3, 6}, {2, 8}};
-
+        int[] boats = new int[]{3, 2, 1, 2};
+        System.out.println(new LeetCode().numRescueBoats(boats, 3));
     }
 
+    //https://leetcode.com/problems/boats-to-save-people/solution/
+    public int numRescueBoats(int[] people, int limit) {
+
+        int trips = 0, n = people.length;
+        Arrays.sort(people);
+        int low = 0, high = n - 1;
+
+        while (low <= high) {
+            if (people[low] + people[high] <= limit)
+                low++;
+            high--;
+            trips++;
+        }
+        return trips;
+    }
 
     //https://www.lintcode.com/problem/641/solution/17645
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
