@@ -1,17 +1,38 @@
 package leetcode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Stack;
 
 
 public class LeetCode {
     public static void main(String[] args) {
         int[][] a = new int[][]{{1, 4}, {3, 6}, {2, 8}};
-        LinkedList<Integer> q = new LinkedList<>();
 
     }
 
 
+    //https://leetcode.com/problems/summary-ranges/submissions/
+    public List<String> summaryRanges(int[] nums) {
+        List<String> result = new ArrayList<>();
+        int n = nums.length;
+        if (n == 0) return result;
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        while (index < n) {
+            int temp = nums[index];
+            sb.append(nums[index++]);
 
+            while (index < n && nums[index] - nums[index - 1] == 1) index++;
+            if (temp != nums[index - 1]) sb.append("->").append(nums[index - 1]);
+
+            result.add(sb.toString());
+            sb.setLength(0);
+        }
+
+        return result;
+    }
 
 
     //https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
