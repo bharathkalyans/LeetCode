@@ -1,15 +1,40 @@
 package leetcode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 
 public class LeetCode {
     public static void main(String[] args) {
         int[] boats = new int[]{3, 2, 1, 2};
-        System.out.println(new LeetCode().numRescueBoats(boats, 3));
+        String[] words = {"l", "h"};
+        System.out.println(new LeetCode().isAlienSorted(words, "hlabcdefgijkmnopqrstuvwxyz"));
+    }
+
+
+    //https://leetcode.com/problems/verifying-an-alien-dictionary/submissions/
+    public boolean isAlienSorted(String[] words, String order) {
+        int n = words.length;
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < order.length(); i++) map.put(order.charAt(i), i);
+        for (int i = 0; i < n - 1; i++)
+            if (!sortedAlienly(words[i], words[i + 1], map)) return false;
+        return true;
+    }
+
+    private boolean sortedAlienly(String s, String t, HashMap<Character, Integer> map) {
+        int m = s.length(), n = t.length();
+        int i = 0, j = 0;
+
+        while (i < m && j < n) {
+            char ss = s.charAt(i);
+            char tt = t.charAt(j);
+            if (ss != tt) return map.get(ss) <= map.get(tt);
+
+            i++;
+            j++;
+        }
+        if (i < m) return false;
+        return true;
     }
 
     //https://leetcode.com/problems/boats-to-save-people/solution/
@@ -20,8 +45,7 @@ public class LeetCode {
         int low = 0, high = n - 1;
 
         while (low <= high) {
-            if (people[low] + people[high] <= limit)
-                low++;
+            if (people[low] + people[high] <= limit) low++;
             high--;
             trips++;
         }
@@ -97,8 +121,7 @@ public class LeetCode {
             CharacterFrequency temp = stack.pop();
             int frequency = temp.freq;
             char toAppendCharacter = temp.c;
-            while (frequency-- > 0)
-                sb.append(toAppendCharacter);
+            while (frequency-- > 0) sb.append(toAppendCharacter);
         }
 
         return sb.reverse().toString();
@@ -163,8 +186,7 @@ public class LeetCode {
         ArrayList<int[]> interval = new ArrayList<>();
 
         for (int[] ints : intervals) {
-            if (interval.isEmpty())
-                interval.add(ints);
+            if (interval.isEmpty()) interval.add(ints);
             else {
                 int[] beforeInterval = interval.get(interval.size() - 1);
                 if (beforeInterval[0] <= ints[0] && beforeInterval[1] >= ints[1]) continue;
