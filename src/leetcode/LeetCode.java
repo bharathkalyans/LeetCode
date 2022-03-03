@@ -5,11 +5,25 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        int[] boats = new int[]{3, 2, 1, 2};
-        String[] words = {"l", "h"};
-        System.out.println(new LeetCode().isAlienSorted(words, "hlabcdefgijkmnopqrstuvwxyz"));
+        new LeetCode();
     }
 
+
+    //https://leetcode.com/problems/arithmetic-slices/submissions/
+    public int numberOfArithmeticSlices(int[] nums) {
+        int n = nums.length;
+        Arrays.sort(nums);
+        int arithmeticSlices = 0;
+        int[] dp = new int[n];
+
+        for (int i = 2; i < n; i++) {
+            if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])
+                dp[i] = dp[i - 1] + 1;
+            arithmeticSlices += dp[i];
+        }
+
+        return arithmeticSlices;
+    }
 
     //https://leetcode.com/problems/verifying-an-alien-dictionary/submissions/
     public boolean isAlienSorted(String[] words, String order) {
