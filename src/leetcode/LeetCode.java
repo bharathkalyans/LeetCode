@@ -5,9 +5,29 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        new LeetCode();
+        System.out.println(new LeetCode().champagneTower(25, 6, 1));
     }
 
+
+    //https://leetcode.com/problems/champagne-tower/submissions/
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        if (poured == 0) return 0;
+        int rows = 100;
+        double[][] champagneTower = new double[rows + 1][rows + 1];
+
+        champagneTower[0][0] = poured;
+
+        for (int row = 0; row <= query_row; row++) {
+            for (int column = 0; column <= row; column++) {
+                double splittingWine = (champagneTower[row][column] - 1.0) / 2.0;
+                if (splittingWine > 0) {
+                    champagneTower[row + 1][column] += splittingWine;
+                    champagneTower[row + 1][column + 1] += splittingWine;
+                }
+            }
+        }
+        return Math.min(1, champagneTower[query_row][query_glass]);
+    }
 
     //https://leetcode.com/problems/arithmetic-slices/submissions/
     public int numberOfArithmeticSlices(int[] nums) {
@@ -17,8 +37,7 @@ public class LeetCode {
         int[] dp = new int[n];
 
         for (int i = 2; i < n; i++) {
-            if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2])
-                dp[i] = dp[i - 1] + 1;
+            if (nums[i] - nums[i - 1] == nums[i - 1] - nums[i - 2]) dp[i] = dp[i - 1] + 1;
             arithmeticSlices += dp[i];
         }
 
