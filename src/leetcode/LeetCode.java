@@ -5,7 +5,35 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        System.out.println(new LeetCode().champagneTower(25, 6, 1));
+        int[] a = {2, 2, 3, 3, 3, 4};
+        System.out.println(new LeetCode().deleteAndEarn(a));
+    }
+
+
+    //https://leetcode.com/problems/delete-and-earn/
+    public int deleteAndEarn(int[] nums) {
+        int[] frequencyMap = new int[1001];
+        int maxElement = 0, minElement = 10001;
+
+        for (int number : nums) {
+            frequencyMap[number] += number;
+            maxElement = Math.max(maxElement, number);
+            minElement = Math.min(minElement, number);
+        }
+        int[] DP = new int[maxElement + 1];
+        Arrays.fill(DP, -1);
+        return helperForDeleteAndEarn(minElement, maxElement, frequencyMap, DP);
+    }
+
+    private int helperForDeleteAndEarn(int minElement, int maxElement, int[] frequencyMap, int[] DP) {
+        if (minElement > maxElement) return 0;
+
+        if (DP[maxElement] == -1) {
+            int includeMaxElement = helperForDeleteAndEarn(minElement, maxElement - 2, frequencyMap, DP) + frequencyMap[maxElement];
+            int excludeMaxElement = helperForDeleteAndEarn(minElement, maxElement - 1, frequencyMap, DP);
+            DP[maxElement] = Math.max(includeMaxElement, excludeMaxElement);
+        }
+        return DP[maxElement];
     }
 
 
