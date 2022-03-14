@@ -6,9 +6,37 @@ import java.util.*;
 public class LeetCode {
     public static void main(String[] args) {
         int[] a = {2, 2, 3, 3, 3, 4};
-        System.out.println(new LeetCode().deleteAndEarn(a));
+        System.out.println(new LeetCode().simplifyPath("/../"));
     }
 
+
+    //https://leetcode.com/problems/simplify-path/submissions/
+    public String simplifyPath(String path) {
+        StringBuilder sb = new StringBuilder();
+        String[] files = path.split("/");
+        Stack<String> s = new Stack<>();
+
+        for (String file : files) System.out.println(file + " aa");
+
+        for (String file : files) {
+            if (file.equals("")) continue;
+            if (file.equals("..")) {
+                if (!s.isEmpty())
+                    s.pop();
+                continue;
+            }
+            if (file.equals(".")) continue;
+            s.push(file);
+        }
+
+        if (s.isEmpty()) sb.append("/");
+        while (!s.isEmpty()) {
+            System.out.println(sb);
+            sb.insert(0, s.pop()).insert(0, "/");
+        }
+
+        return sb.toString();
+    }
 
     //https://leetcode.com/problems/snakes-and-ladders/
     public int snakesAndLadders(int[][] board) {
