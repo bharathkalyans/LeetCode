@@ -10,6 +10,67 @@ public class LeetCode {
     }
 
 
+    //https://leetcode.com/problems/spiral-matrix-ii/submissions/
+    public int[][] generateMatrix(int n) {
+        int[][] matrix = new int[n][n];
+        int first = 1, last = n * n;
+
+        int top = 0, left = 0, bottom = n - 1, right = n - 1;
+
+        //Traverse from 1 to n^2;
+        while (first <= last) {
+            for (int i = left; i <= right && first <= last; i++) {
+                matrix[top][i] = first++;
+            }
+            top++;
+            for (int i = top; i <= bottom && first <= last; i++) {
+                matrix[i][right] = first++;
+            }
+            right--;
+            for (int i = right; i >= left && first <= last; i--) {
+                matrix[bottom][i] = first++;
+            }
+            bottom--;
+            for (int i = bottom; i >= top && first < last; i--) {
+                matrix[i][left] = first++;
+            }
+            left++;
+        }
+        return matrix;
+    }
+
+
+    //https://leetcode.com/problems/spiral-matrix/submissions/
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> result = new ArrayList<>();
+        if (matrix == null || matrix.length == 0) return result;
+
+        int m = matrix.length, n = matrix[0].length;
+        int top = 0, left = 0, bottom = m - 1, right = n - 1;
+        int size = m * n;
+
+        while (result.size() < size) {
+            for (int i = left; i <= right && result.size() < size; i++) {
+                result.add(matrix[top][i]);
+            }
+            top++;
+            for (int i = top; i <= bottom && result.size() < size; i++) {
+                result.add(matrix[i][right]);
+            }
+            right--;
+
+            for (int i = right; i >= left && result.size() < size; i--) {
+                result.add(matrix[bottom][i]);
+            }
+            bottom--;
+            for (int i = bottom; i >= top && result.size() < size; i--) {
+                result.add(matrix[i][left]);
+            }
+            left++;
+        }
+        return result;
+    }
+
     //https://www.hackerrank.com/challenges/journey-to-the-moon/problem
     private static ArrayList<ArrayList<Integer>> buildGraph(List<List<Integer>> astronaut, int n) {
         ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
