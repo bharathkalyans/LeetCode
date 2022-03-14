@@ -10,6 +10,50 @@ public class LeetCode {
     }
 
 
+    //https://www.hackerrank.com/challenges/journey-to-the-moon/problem
+    private static ArrayList<ArrayList<Integer>> buildGraph(List<List<Integer>> astronaut, int n) {
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++)
+            graph.add(new ArrayList<>());
+        for (List<Integer> pair : astronaut) {
+            graph.get(pair.get(0)).add(pair.get(1));
+            graph.get(pair.get(1)).add(pair.get(0));
+        }
+        return graph;
+    }
+
+    public static int journeyToMoon(int n, List<List<Integer>> astronaut) {
+        ArrayList<ArrayList<Integer>> graph = buildGraph(astronaut, n);
+        boolean isVisited[] = new boolean[n];
+        ArrayList<Integer> people = new ArrayList<>();
+        for (int i = 0; i < n; i++) {
+            if (!isVisited[i]) {
+                people.add(doDFS(i, graph, isVisited));
+            }
+        }
+
+        int sum = 0;
+        int result = 0;
+        for (int size : people) {
+            result += sum * size;
+            sum += size;
+        }
+        return result;
+    }
+
+    private static Integer doDFS(int vertice, ArrayList<ArrayList<Integer>> graph, boolean[] isVisited) {
+        isVisited[vertice] = true;
+        int nodes = 1;
+
+        for (int adjacentNode : graph.get(vertice)) {
+            if (!isVisited[adjacentNode]) {
+                nodes += doDFS(adjacentNode, graph, isVisited);
+            }
+        }
+        return nodes;
+    }
+
+
     //https://leetcode.com/problems/simplify-path/submissions/
     public String simplifyPath(String path) {
         StringBuilder sb = new StringBuilder();
