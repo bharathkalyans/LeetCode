@@ -9,6 +9,24 @@ public class LeetCode {
     }
 
 
+    //https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/submissions/
+    public int minSwaps(String s) {
+        int open = 0, unBalanced = 0;
+        for (char character : s.toCharArray()) {
+            if (character == '[') open++;
+            else {
+                if (open > 0) open--;
+                else {
+                    unBalanced++;
+                }
+            }
+        }
+
+        unBalanced += open;
+        unBalanced /= 2;
+        return (unBalanced + 1) / 2;
+    }
+
     //https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/
     public String minRemoveToMakeValid(String string) {
         Stack<Integer> s = new Stack<>();
