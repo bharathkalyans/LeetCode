@@ -2,13 +2,36 @@ package leetcode;
 
 import java.util.*;
 
-
 public class LeetCode {
     public static void main(String[] args) {
         int[] a = {2, 2, 3, 3, 3, 4};
-        System.out.println(new LeetCode().simplifyPath("/../"));
+        System.out.println(new LeetCode().minRemoveToMakeValid("bha(a))ra(th))"));
     }
 
+
+    //https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/
+    public String minRemoveToMakeValid(String string) {
+        Stack<Integer> s = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        for (char c : string.toCharArray()) {
+            if (c == '(') s.push(index);
+            else if (c == ')') {
+                if (!s.isEmpty() && string.charAt(s.peek()) == '(') s.pop();
+                else s.push(index);
+            }
+            index++;
+        }
+
+        HashSet<Integer> set = new HashSet<>(s);
+        index = 0;
+        for (char character : string.toCharArray()) {
+            if (!set.contains(index)) sb.append(character);
+            index++;
+        }
+
+        return sb.toString();
+    }
 
     //https://leetcode.com/problems/spiral-matrix-ii/submissions/
     public int[][] generateMatrix(int n) {
