@@ -9,6 +9,19 @@ public class LeetCode {
     }
 
 
+    //https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/
+    public int minAddToMakeValid(String str) {
+        Stack<Character> s = new Stack<>();
+        for (char c : str.toCharArray()) {
+            if (c == '(') s.push(c);
+            else {
+                if (!s.isEmpty() && s.peek() == '(') s.pop();
+                else s.push(c);
+            }
+        }
+        return s.size();
+    }
+
     //https://leetcode.com/problems/minimum-number-of-swaps-to-make-the-string-balanced/submissions/
     public int minSwaps(String s) {
         int open = 0, unBalanced = 0;
