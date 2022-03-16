@@ -8,6 +8,20 @@ public class LeetCode {
         System.out.println(new LeetCode().minRemoveToMakeValid("bha(a))ra(th))"));
     }
 
+    //https://leetcode.com/problems/validate-stack-sequences/submissions/
+    public boolean validateStackSequences(int[] pushed, int[] popped) {
+        int n = pushed.length;
+        Stack<Integer> s = new Stack<>();
+        int poppedPointer = 0;
+        for (int i = 0; i < n; i++) {
+            s.push(pushed[i]);
+            while (!s.isEmpty() && s.peek() == popped[poppedPointer]) {
+                s.pop();
+                poppedPointer++;
+            }
+        }
+        return s.isEmpty();
+    }
 
     //https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/submissions/
     public int minAddToMakeValid(String str) {
