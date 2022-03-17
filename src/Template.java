@@ -28,7 +28,6 @@ public class Template {
         while (testCases-- > 0) {
 
         }
-
     }
 
     //DEBUGGING PURPOSE

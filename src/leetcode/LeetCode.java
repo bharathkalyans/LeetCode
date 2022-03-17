@@ -1,3 +1,4 @@
+
 package leetcode;
 
 import java.util.*;
@@ -5,7 +6,7 @@ import java.util.*;
 public class LeetCode {
     public static void main(String[] args) {
         int[] a = {2, 2, 3, 3, 3, 4};
-        System.out.println(new LeetCode().minRemoveToMakeValid("bha(a))ra(th))"));
+
     }
 
     //https://leetcode.com/problems/validate-stack-sequences/submissions/
@@ -13,8 +14,8 @@ public class LeetCode {
         int n = pushed.length;
         Stack<Integer> s = new Stack<>();
         int poppedPointer = 0;
-        for (int i = 0; i < n; i++) {
-            s.push(pushed[i]);
+        for (int j : pushed) {
+            s.push(j);
             while (!s.isEmpty() && s.peek() == popped[poppedPointer]) {
                 s.pop();
                 poppedPointer++;
