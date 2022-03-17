@@ -1,22 +1,28 @@
+import java.util.HashMap;
 
 class TrieNode {
-    TrieNode[] links = new TrieNode[26];
+
+    HashMap<Character, TrieNode> map = new HashMap<>();
+    //TrieNode[] links = new TrieNode[26];
     boolean flag = false;
 
     TrieNode() {
     }
 
     boolean containsKey(char c) {
-        return links[c - 'a'] != null;
+        return map.containsKey(c);
+//        return links[c - 'a'] != null;
     }
 
     TrieNode get(char c) {
-        return links[c - 'a'];
+        return map.get(c);
+        //return links[c - 'a'];
     }
 
 
     void put(char c, TrieNode node) {
-        links[c - 'a'] = node;
+        map.put(c, node);
+        //links[c - 'a'] = node;
     }
 
     boolean isEnd() {
