@@ -2,27 +2,23 @@ import java.util.HashMap;
 
 class TrieNode {
 
-    HashMap<Character, TrieNode> map = new HashMap<>();
-    //TrieNode[] links = new TrieNode[26];
+    private HashMap<Character, TrieNode> map = new HashMap<>();
     boolean flag = false;
+    int frequency = 0;
 
     TrieNode() {
     }
 
     boolean containsKey(char c) {
         return map.containsKey(c);
-//        return links[c - 'a'] != null;
     }
 
     TrieNode get(char c) {
         return map.get(c);
-        //return links[c - 'a'];
     }
-
 
     void put(char c, TrieNode node) {
         map.put(c, node);
-        //links[c - 'a'] = node;
     }
 
     boolean isEnd() {
@@ -37,7 +33,7 @@ class TrieNode {
 
 public class Trie {
 
-    private static TrieNode root;
+    private TrieNode root;
 
     public Trie() {
         root = new TrieNode();
@@ -47,8 +43,10 @@ public class Trie {
     public void insert(String word) {
         TrieNode temp = root;
         for (char c : word.toCharArray()) {
-            if (!temp.containsKey(c))
-                temp.put(c, new TrieNode());
+            if (!temp.containsKey(c)) temp.put(c, new TrieNode());
+
+            temp.get(c).frequency++;
+
             temp = temp.get(c);
         }
         temp.setFlag();
@@ -72,5 +70,20 @@ public class Trie {
         return true;
     }
 
+    public String findShortestPrefix(String word) {
+        StringBuilder sb = new StringBuilder();
+        TrieNode temp = root;
+
+        for (char c : word.toCharArray()) {
+            if (temp.get(c).frequency == 1) {
+                sb.append(c);
+                break;
+            }
+            sb.append(c);
+            temp = temp.get(c);
+        }
+
+        return sb.toString();
+    }
 
 }
