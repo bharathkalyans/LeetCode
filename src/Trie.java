@@ -2,7 +2,7 @@ import java.util.HashMap;
 
 class TrieNode {
 
-    private HashMap<Character, TrieNode> map = new HashMap<>();
+    HashMap<Character, TrieNode> map = new HashMap<>();
     boolean flag = false;
     int frequency = 0;
 
@@ -10,25 +10,28 @@ class TrieNode {
     }
 
     boolean containsKey(char c) {
-        return map.containsKey(c);
+        return this.map.containsKey(c);
     }
 
     TrieNode get(char c) {
-        return map.get(c);
+        return this.map.get(c);
     }
 
     void put(char c, TrieNode node) {
-        map.put(c, node);
+        this.map.put(c, node);
     }
 
     boolean isEnd() {
-        return flag;
+        return this.flag;
     }
 
     void setFlag() {
-        flag = true;
+        this.flag = true;
     }
 
+    int getMapSize() {
+        return this.map.size();
+    }
 }
 
 public class Trie {
@@ -81,6 +84,20 @@ public class Trie {
             }
             sb.append(c);
             temp = temp.get(c);
+        }
+
+        return sb.toString();
+    }
+
+    public String findLongestCommonPrefix() {
+        StringBuilder sb = new StringBuilder();
+        TrieNode temp = root;
+
+        while (temp != null && !temp.isEnd() && temp.map.size() == 1) {
+            for (var entry : temp.map.entrySet()) {
+                sb.append(entry.getKey());
+                temp = entry.getValue();
+            }
         }
 
         return sb.toString();
