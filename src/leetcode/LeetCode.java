@@ -5,8 +5,72 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        int[] a = {2, 2, 3, 3, 3, 4};
+        int[] b = {5, 4, 9};
+        System.out.println(new LeetCode().minStoneSum(b, 2));
 
+    }
+
+    //https://leetcode.com/problems/remove-stones-to-minimize-the-total/
+    public int minStoneSum(int[] piles, int k) {
+        int stoneWeight = 0;
+        PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
+        for (int pile : piles) pq.add(pile);
+
+        while (k-- > 0) {
+            int stones = pq.poll();
+            stones -= (int) Math.floor(stones / 2);
+            pq.add(Math.round(stones));
+        }
+
+        while (pq.size() > 0) stoneWeight += pq.poll();
+        return stoneWeight;
+    }
+
+    public int halveArray(int[] nums) {
+        int minimumOperation = 0;
+        double sum = 0;
+        PriorityQueue<Double> pq = new PriorityQueue<>(Collections.reverseOrder());
+
+        for (int x : nums) {
+            sum += x;
+            pq.add((double) x);
+        }
+        System.out.println("Sum is :: " + sum);
+
+        double tempSum = sum;
+        double requiredSum = sum / 2;
+        while (tempSum > requiredSum) {
+
+            double peekElement = pq.poll();
+            System.out.println("Temp Sum is :: " + tempSum + " and peek element is  :: " + peekElement);
+            peekElement /= 2;
+            tempSum -= peekElement;
+            pq.offer(peekElement);
+            minimumOperation++;
+        }
+
+        return minimumOperation;
+    }
+
+    public long maximumSubsequenceCount(String text, String pattern) {
+        String name = "fsdfsdf";
+
+
+        return 0L;
+    }
+
+    public boolean divideArray(int[] nums) {
+        int n = nums.length;
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int x : nums) map.put(x, map.getOrDefault(x, 0) + 1);
+
+
+        for (int count : map.values()) {
+            if (count % 2 != 0) return false;
+        }
+
+        return true;
     }
 
     //https://leetcode.com/problems/validate-stack-sequences/submissions/
