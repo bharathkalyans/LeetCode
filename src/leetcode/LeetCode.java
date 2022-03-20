@@ -5,9 +5,36 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        int[] b = {5, 4, 9};
-        System.out.println(new LeetCode().minStoneSum(b, 2));
 
+        //[1,2,1,1,1,2,2,2]
+        //[2,1,2,2,2,2,2,2]
+        int[] a = {1, 2, 1, 1, 1, 2, 2, 2};
+        int[] b = {2, 1, 2, 2, 2, 2, 2, 2};
+        System.out.println(new LeetCode().minDominoRotations(a, b));
+
+    }
+
+    //https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/
+    public int minDominoRotations(int[] tops, int[] bottoms) {
+        int minFlips = Integer.MAX_VALUE;
+
+        for (int i = 1; i <= 6; i++) {
+            minFlips = Math.min(minFlips, helper(tops, bottoms, i));
+            minFlips = Math.min(minFlips, helper(bottoms, tops, i));
+        }
+
+        return minFlips == Integer.MAX_VALUE ? -1 : minFlips;
+    }
+
+    private int helper(int[] tops, int[] bottoms, int target) {
+        int n = tops.length;
+        int minFlips = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (tops[i] != target && bottoms[i] != target) return Integer.MAX_VALUE;
+            if (tops[i] != target) minFlips++;
+        }
+        return minFlips;
     }
 
     //https://leetcode.com/problems/remove-stones-to-minimize-the-total/
