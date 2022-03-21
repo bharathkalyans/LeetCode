@@ -5,13 +5,34 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
+        System.out.println(new LeetCode().partitionLabels("eccbbbbdecz"));
+    }
 
-        //[1,2,1,1,1,2,2,2]
-        //[2,1,2,2,2,2,2,2]
-        int[] a = {1, 2, 1, 1, 1, 2, 2, 2};
-        int[] b = {2, 1, 2, 2, 2, 2, 2, 2};
-        System.out.println(new LeetCode().minDominoRotations(a, b));
 
+    //https://leetcode.com/problems/partition-labels/
+    public List<Integer> partitionLabels(String s) {
+        int n = s.length();
+        List<Integer> l = new ArrayList<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        //Store the last indexes of the characters.
+        for (int i = 0; i < n; i++) map.put(s.charAt(i), i);
+
+        int outerLoop = 0;
+        while (outerLoop < n) {
+            int maxEnd = map.get(s.charAt(outerLoop)), innerLoop = outerLoop + 1;
+            while (innerLoop < maxEnd) {
+                int curr = map.get(s.charAt(innerLoop));
+                if (curr > maxEnd) {
+                    maxEnd = curr;
+                }
+                innerLoop++;
+            }
+            l.add(maxEnd - outerLoop + 1);
+            outerLoop = maxEnd + 1;
+        }
+
+        return l;
     }
 
     //https://leetcode.com/problems/minimum-domino-rotations-for-equal-row/
