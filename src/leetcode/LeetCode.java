@@ -5,9 +5,27 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        System.out.println(new LeetCode().partitionLabels("eccbbbbdecz"));
+
+        System.out.println((char) (25 + 'a'));
+        System.out.println(new LeetCode().getSmallestString(5, 73));
     }
 
+
+    //https://leetcode.com/problems/smallest-string-with-a-given-numeric-value/
+    public String getSmallestString(int n, int k) {
+        char[] answer = new char[n];
+        Arrays.fill(answer, 'a');
+
+        k = k - n;
+
+        while (n > 0 && k > 0) {
+            int min = Math.min(25, k);
+            answer[--n] = (char) (min + 'a');
+            k -= min;
+        }
+
+        return String.valueOf(answer);
+    }
 
     //https://leetcode.com/problems/partition-labels/
     public List<Integer> partitionLabels(String s) {
