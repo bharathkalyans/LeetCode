@@ -11,19 +11,31 @@ public class LeetCode {
     }
 
 
+    //https://leetcode.com/problems/broken-calculator/
+    public int brokenCalc(int startValue, int target) {
+        int operations = 0;
+
+        while (startValue != target) {
+            if (target % 2 == 0) target /= 2;
+            else target += 1;
+            operations++;
+        }
+        //We are subtracting target from start because we can get minimum steps in this way.
+        // As you are done dividing by 2!
+        return operations + startValue - target;
+    }
+
+
     //https://leetcode.com/problems/smallest-string-with-a-given-numeric-value/
     public String getSmallestString(int n, int k) {
         char[] answer = new char[n];
         Arrays.fill(answer, 'a');
-
         k = k - n;
-
         while (n > 0 && k > 0) {
             int min = Math.min(25, k);
             answer[--n] = (char) (min + 'a');
             k -= min;
         }
-
         return String.valueOf(answer);
     }
 
