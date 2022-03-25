@@ -15,7 +15,7 @@ public class LeetCode {
         int minimumCost = 0, n = costs.length;
         int maxPeopleInACity = n / 2, peopleInCityA = 0, peopleInCityB = 0;
 
-        Arrays.sort(costs, (a, b) -> Math.abs(a[0] - a[1]) - Math.abs(b[0] - b[1]));
+        Arrays.sort(costs, (a, b) ->(a[0] - a[1]) - (b[0] - b[1]));
 
         /* DEBUGGING */
         for (int[] cost : costs) {
@@ -162,15 +162,7 @@ public class LeetCode {
         return minimumOperation;
     }
 
-    public long maximumSubsequenceCount(String text, String pattern) {
-        String name = "fsdfsdf";
-
-
-        return 0L;
-    }
-
     public boolean divideArray(int[] nums) {
-        int n = nums.length;
         HashMap<Integer, Integer> map = new HashMap<>();
 
         for (int x : nums) map.put(x, map.getOrDefault(x, 0) + 1);
@@ -185,7 +177,6 @@ public class LeetCode {
 
     //https://leetcode.com/problems/validate-stack-sequences/submissions/
     public boolean validateStackSequences(int[] pushed, int[] popped) {
-        int n = pushed.length;
         Stack<Integer> s = new Stack<>();
         int poppedPointer = 0;
         for (int j : pushed) {
@@ -680,8 +671,7 @@ public class LeetCode {
     public static String removeKDigits(String str, int k) {
 
         char[] nums = str.toCharArray();
-        int n = nums.length;
-
+        
         Stack<Character> st = new Stack<>();
 
         //14399800
