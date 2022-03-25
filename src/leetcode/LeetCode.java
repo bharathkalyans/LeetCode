@@ -5,11 +5,43 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-
-        System.out.println((char) (25 + 'a'));
-        System.out.println(new LeetCode().getSmallestString(5, 73));
+        int[][] costs = new int[][]{{259, 770}, {448, 54}, {926, 667}, {184, 139}, {840, 118}, {577, 469}};
+        System.out.println(new LeetCode().twoCitySchedCost(costs));
     }
 
+
+    //https://leetcode.com/problems/two-city-scheduling/submissions/
+    public int twoCitySchedCost(int[][] costs) {
+        int minimumCost = 0, n = costs.length;
+        int maxPeopleInACity = n / 2, peopleInCityA = 0, peopleInCityB = 0;
+
+        Arrays.sort(costs, (a, b) -> Math.abs(a[0] - a[1]) - Math.abs(b[0] - b[1]));
+
+        /* DEBUGGING */
+        for (int[] cost : costs) {
+            for (int c : cost) System.out.print(c + " ");
+            System.out.println();
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            int costToA = costs[i][0], costToB = costs[i][1];
+            if (peopleInCityA == maxPeopleInACity) {
+                minimumCost += costToB;
+            } else if (peopleInCityB == maxPeopleInACity) {
+                minimumCost += costToA;
+            } else {
+                if (costToA < costToB) {
+                    minimumCost += costToA;
+                    peopleInCityA++;
+                } else {
+                    minimumCost += costToB;
+                    peopleInCityB++;
+                }
+            }
+
+        }
+        return minimumCost;
+    }
 
     //https://leetcode.com/problems/broken-calculator/
     public int brokenCalc(int startValue, int target) {
