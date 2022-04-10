@@ -5,17 +5,46 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        int[][] costs = new int[][]{{259, 770}, {448, 54}, {926, 667}, {184, 139}, {840, 118}, {577, 469}};
-        System.out.println(new LeetCode().twoCitySchedCost(costs));
+
+        String[] arr = new String[]{"5", "-2", "4", "C", "D", "9", "+", "+"};
+
+        System.out.println(new LeetCode().calPoints(arr));
     }
 
+    public int calPoints(String[] ops) {
+        Stack<Integer> stack = new Stack<>();
+        for (String s : ops) {
+            if (Character.isLetter(s.charAt(0))) {
+                if (s.charAt(0) == 'D') {
+                    int peek = stack.peek() * 2;
+                    stack.push(peek);
+                } else if (s.charAt(0) == 'C') {
+                    stack.pop();
+                }
+            } else if (s.charAt(0) == '+') {
+                int first = stack.pop();
+                int second = stack.pop();
+                int sum = first + second;
+                stack.push(second);
+                stack.push(first);
+                stack.push(sum);
+            } else {
+                int number = Integer.parseInt(s);
+                stack.push(number);
+            }
+            System.out.println(stack);
+        }
+        int sum = 0;
+        while (!stack.isEmpty()) sum += stack.pop();
+        return sum;
+    }
 
     //https://leetcode.com/problems/two-city-scheduling/submissions/
     public int twoCitySchedCost(int[][] costs) {
         int minimumCost = 0, n = costs.length;
         int maxPeopleInACity = n / 2, peopleInCityA = 0, peopleInCityB = 0;
 
-        Arrays.sort(costs, (a, b) ->(a[0] - a[1]) - (b[0] - b[1]));
+        Arrays.sort(costs, (a, b) -> (a[0] - a[1]) - (b[0] - b[1]));
 
         /* DEBUGGING */
         for (int[] cost : costs) {
@@ -671,7 +700,7 @@ public class LeetCode {
     public static String removeKDigits(String str, int k) {
 
         char[] nums = str.toCharArray();
-        
+
         Stack<Character> st = new Stack<>();
 
         //14399800
