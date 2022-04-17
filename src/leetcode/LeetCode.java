@@ -6,11 +6,50 @@ import java.util.*;
 public class LeetCode {
     public static void main(String[] args) {
 
-        String[] arr = new String[]{"5", "-2", "4", "C", "D", "9", "+", "+"};
-
-        System.out.println(new LeetCode().calPoints(arr));
     }
 
+
+    public int minimumRounds(int[] tasks) {
+        int rounds = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int x : tasks) map.put(x, map.getOrDefault(x, 0) + 1);
+
+        for (Map.Entry<Integer, Integer> mm : map.entrySet()) {
+            System.out.println("Key and Value are :: " + mm.getKey() + " :: " + mm.getValue());
+            int value = mm.getValue();
+
+            while (value % 3 > 3) {
+                rounds++;
+                value /= 3;
+            }
+            while (value % 2 > 2) {
+                rounds++;
+                value /= 2;
+            }
+            if (value == 1) return -1;
+        }
+
+        return rounds;
+    }
+
+    public String digitSum(String s, int k) {
+        if (s == null || s.length() < k) return s;
+
+        char[] string = s.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        int j = 0, sum = 0;
+        for (int i = 0; i < string.length; i++) {
+            sum += string[i] - '0';
+            j++;
+            if (j == k) {
+                sb.append(sum);
+                sum = 0;
+                j = 0;
+            }
+        }
+        if (j != 0) sb.append(sum);
+        return digitSum(sb.toString(), k);
+    }
 
     //https://leetcode.com/problems/shift-2d-grid/submissions/
     public List<List<Integer>> shiftGrid(int[][] grid, int k) {
