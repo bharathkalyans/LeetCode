@@ -5,9 +5,38 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-
+        List<Long> ls = new ArrayList<>();
+        System.out.println(getFactorsSum(10));
     }
 
+    public static List<Long> maxSubSetSum(List<Integer> k) {
+        int n = k.size();
+        List<Long> l = new ArrayList<Long>(n);
+        for (Integer integer : k) {
+            l.add(getFactorsSum(integer));
+        }
+        return l;
+    }
+
+    private static Long getFactorsSum(int integer) {
+        long sum = 0;
+        for (int i = 1; i <= integer; i++) {
+            if (integer % i == 0) sum += i;
+        }
+        return sum;
+    }
+
+    public static int getTriangleArea(List<Integer> x, List<Integer> y) {
+
+        int aX = x.get(0);
+        int aY = y.get(0);
+        int bX = x.get(1);
+        int bY = y.get(1);
+        int cX = x.get(2);
+        int cY = y.get(2);
+
+        return Math.abs((aX * (bY - cY) + bX * (cY - aY) + cX * (aY - bY))) / 2;
+    }
 
     public int minimumRounds(int[] tasks) {
         int rounds = 0;
