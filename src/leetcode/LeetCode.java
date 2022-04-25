@@ -5,8 +5,8 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        List<Long> ls = new ArrayList<>();
-        System.out.println(getFactorsSum(10));
+
+
     }
 
     public static List<Long> maxSubSetSum(List<Integer> k) {
