@@ -8,6 +8,19 @@ public class LeetCode {
 
     }
 
+    public static String removeDigit(String number, char digit) {
+        List<String> l = new ArrayList<>();
+
+        for (int i = 0; i < number.length(); i++) {
+            if (number.charAt(i) == digit) {
+                String tempNumber = number.substring(0, i) + number.substring(i + 1);
+                l.add(tempNumber);
+            }
+        }
+        Collections.sort(l);
+        return l.get(l.size() - 1);
+    }
+
     //https://leetcode.com/problems/backspace-string-compare/discuss/?currentPage=1&orderBy=most_votes&query=
     public boolean backspaceCompare(String s, String t) {
         StringBuilder sb1 = new StringBuilder();
