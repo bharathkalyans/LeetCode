@@ -23,8 +23,8 @@ public class LeetCode {
     private static int countSubstrings(String s, int pivotLeft, int pivotRight) {
         int countOfPalindromes = 0, n = s.length();
 
-        while (pivotLeft >= 0 && pivotRight < n) {
-            if (s.charAt(pivotLeft) == s.charAt(pivotRight)) countOfPalindromes++;
+        while (pivotLeft >= 0 && pivotRight < n && s.charAt(pivotLeft) == s.charAt(pivotRight)) {
+            countOfPalindromes++;
             pivotLeft--;
             pivotRight++;
         }
