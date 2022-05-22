@@ -6,6 +6,30 @@ import java.util.*;
 public class LeetCode {
     public static void main(String[] args) {
 
+        System.out.println(countSubstrings("ASXSA"));
+    }
+
+
+    //https://leetcode.com/problems/palindromic-substrings/
+    public static int countSubstrings(String s) {
+        int n = s.length(), count = 0;
+        for (int i = 0; i < n; i++) {
+            count += countSubstrings(s, i, i);
+            count += countSubstrings(s, i, i + 1);
+        }
+        return count;
+    }
+
+    private static int countSubstrings(String s, int pivotLeft, int pivotRight) {
+        int countOfPalindromes = 0, n = s.length();
+
+        while (pivotLeft >= 0 && pivotRight < n) {
+            if (s.charAt(pivotLeft) == s.charAt(pivotRight)) countOfPalindromes++;
+            pivotLeft--;
+            pivotRight++;
+        }
+
+        return countOfPalindromes;
     }
 
     public static String removeDigit(String number, char digit) {
