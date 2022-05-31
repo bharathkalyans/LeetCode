@@ -10,6 +10,39 @@ public class LeetCode {
     }
 
 
+    //https://leetcode.com/problems/check-if-a-string-contains-all-binary-codes-of-size-k/
+    public boolean hasAllCodes(String s, int k) {
+        if (s.length() < k) return false;
+        HashSet<String> set = generateSubStrings(s, k);
+        return hasAllCodes("", s, k, set);
+    }
+
+    private HashSet<String> generateSubStrings(String s, int k) {
+        HashSet<String> set = new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < k; i++) sb.append(s.charAt(i));
+        set.add(sb.toString());
+
+        for (int i = k; i < s.length() - k + 1; i++) {
+            sb.deleteCharAt(0);
+            sb.append(s.charAt(i));
+            set.add(sb.toString());
+        }
+        return set;
+    }
+
+    private boolean hasAllCodes(String str, String s, int k, HashSet<String> set) {
+        if (str.length() == k) {
+            System.out.println(str);
+            return set.contains(str);
+        }
+
+        boolean addingZero = hasAllCodes(str + '0', s, k, set);
+        boolean addingOne = hasAllCodes(str + '1', s, k, set);
+
+        return addingZero && addingOne;
+    }
+
     //https://leetcode.com/problems/palindromic-substrings/
     public static int countSubstrings(String s) {
         int n = s.length(), count = 0;
