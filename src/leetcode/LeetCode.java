@@ -10,6 +10,29 @@ public class LeetCode {
     }
 
 
+    public int[] arrayChange(int[] nums, int[][] operations) {
+
+        int n = nums.length, m = operations.length;
+        HashMap<Integer, Integer> allNums = new HashMap<>();
+
+        for (int i = 0; i < n; i++) allNums.put(nums[i], i);
+
+        for (int[] operation : operations) {
+            int key = operation[0];
+            int valueToBeSubstituted = operation[1];
+            if (allNums.containsKey(key)) {
+                int index = allNums.get(operation[0]);
+                allNums.remove(key);
+                allNums.put(valueToBeSubstituted, index);
+            }
+        }
+
+        for (Map.Entry<Integer, Integer> mm : allNums.entrySet())
+            nums[mm.getValue()] = mm.getKey();
+
+        return nums;
+    }
+
     //https://leetcode.com/problems/check-if-a-string-contains-all-binary-codes-of-size-k/
     public boolean hasAllCodes(String s, int k) {
         if (s.length() < k) return false;
