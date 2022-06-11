@@ -6,9 +6,96 @@ import java.util.*;
 public class LeetCode {
     public static void main(String[] args) {
 
-        System.out.println(countSubstrings("ASXSA"));
+        String g = "bharath";
+        String gh = "ath";
+        System.out.println(g.contains(gh));
+
     }
 
+    public boolean matchReplacement(String s, String sub, char[][] mappings) {
+
+
+        return false;
+    }
+
+    public long countSubarrays(int[] nums, long k) {
+        int count = 0, n = nums.length;
+
+        for (int i = 0; i < n; i++) {
+            long sum = 0;
+            for (int j = i; j < n; j++) {
+                sum += nums[j];
+                System.out.println("Current Sum is :: " + sum);
+                if (sum * (j - i + 1) < k) count++;
+            }
+        }
+
+        return count;
+    }
+
+    public int[] successfulPairs(int[] spells, int[] potions, long success) {
+
+        int m = spells.length, n = potions.length;
+        int[] result = new int[m];
+
+        Arrays.sort(potions);
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = m - 1; i >= 0; i--) {
+            if (map.containsKey(spells[i])) {
+                result[i] = map.get(spells[i]);
+                continue;
+            }
+
+            int low = 0, high = n - 1;
+            while (low <= high) {
+                int mid = (low + high) / 2;
+                if ((long) spells[i] * potions[mid] >= success) high = mid - 1;
+                else low = mid + 1;
+            }
+            int successfulPairs = n - low;
+            map.put(spells[i], successfulPairs);
+            result[i] = successfulPairs;
+        }
+
+        return result;
+    }
+
+
+    public boolean strongPasswordCheckerII(String password) {
+
+        int n = password.length();
+        boolean hasEightCharacters = n >= 8;
+        boolean hasLowerCase = false;
+        boolean hasUpperCase = false;
+        boolean hasADigit = false;
+        boolean hasSpecialCharacter = false;
+
+        String specialCharacters = "!@#$%^&*()-+";
+
+        for (int i = 0; i < n; i++) {
+            char character = password.charAt(i);
+            if (Character.isDigit(character)) hasADigit = true;
+            else if (Character.isUpperCase(character)) hasUpperCase = true;
+            else if (Character.isLowerCase(character)) hasLowerCase = true;
+            else if (character == '!') hasSpecialCharacter = true;
+            else if (character == '@') hasSpecialCharacter = true;
+            else if (character == '#') hasSpecialCharacter = true;
+            else if (character == '$') hasSpecialCharacter = true;
+            else if (character == '%') hasSpecialCharacter = true;
+            else if (character == '^') hasSpecialCharacter = true;
+            else if (character == '&') hasSpecialCharacter = true;
+            else if (character == '*') hasSpecialCharacter = true;
+            else if (character == '(') hasSpecialCharacter = true;
+            else if (character == ')') hasSpecialCharacter = true;
+            else if (character == '-') hasSpecialCharacter = true;
+            else if (character == '+') hasSpecialCharacter = true;
+
+            if (i > 0 && password.charAt(i - 1) == password.charAt(i)) return false;
+        }
+
+        return hasEightCharacters && hasLowerCase && hasUpperCase && hasADigit && hasSpecialCharacter;
+    }
 
     public int[] arrayChange(int[] nums, int[][] operations) {
 
