@@ -5,17 +5,51 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-
-        String g = "bharath";
-        String gh = "ath";
-        System.out.println(g.contains(gh));
-
+        System.out.println(greatestLetter("lEeTcOdE"));
+        System.out.println(greatestLetter("arRAzFif"));
     }
 
-    public boolean matchReplacement(String s, String sub, char[][] mappings) {
+    //https://leetcode.com/problems/furthest-building-you-can-reach/
+    public int furthestBuilding(int[] heights, int bricks, int ladders) {
+        int n = heights.length, building;
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
 
+        for (building = 1; building < n; building++) {
+            int heightDifference = heights[building] - heights[building - 1];
+            if (heightDifference > 0) {
+                if (pq.size() < ladders) pq.add(heightDifference);
+                else {
+                    int bricksToBeUsed = heightDifference;
+                    if (!pq.isEmpty() && pq.peek() < heightDifference) {
+                        bricksToBeUsed = pq.poll();
+                        pq.add(heightDifference);
+                    }
 
-        return false;
+                    if (bricks - bricksToBeUsed >= 0) bricks -= bricksToBeUsed;
+                    else return building - 1;
+                }
+            }
+
+        }
+
+        return n - 1;
+    }
+
+    public static String greatestLetter(String s) {
+
+        System.out.println((char) (97));
+        System.out.println((char) (65));
+
+        HashSet<Character> set = new HashSet<>();
+        for (char c : s.toCharArray()) set.add(c);
+
+        for (int i = 96; i >= 65; i--) {
+            char upperCase = (char) i;
+            char lowerCase = Character.toLowerCase(upperCase);
+            if (set.contains(lowerCase) && set.contains(upperCase)) return String.valueOf(upperCase);
+        }
+
+        return "";
     }
 
     public long countSubarrays(int[] nums, long k) {
