@@ -3,10 +3,24 @@ package leetcode;
 
 import java.util.*;
 
+
 public class LeetCode {
     public static void main(String[] args) {
-        System.out.println(greatestLetter("lEeTcOdE"));
-        System.out.println(greatestLetter("arRAzFif"));
+
+    }
+
+    public int[][] reconstructQueue(int[][] people) {
+
+        Arrays.sort(people, (o1, o2) -> {
+            if (o1[0] == o2[0]) return o1[1] - o2[1];
+            else return o2[0] - o1[0];
+        });
+
+        List<int[]> tempList = new ArrayList<>();
+        for (int[] unit : people) {
+            tempList.add(unit[1], unit);
+        }
+        return tempList.toArray(new int[people.length][2]);
     }
 
     //https://leetcode.com/problems/furthest-building-you-can-reach/
