@@ -6,7 +6,39 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
+        int[][] cost = new int[][]{{14, 2, 11}, {11, 14, 5}, {14, 3, 10}};
+        System.out.println(minCost(cost));
+    }
 
+
+    public static int minCost(int[][] costs) {
+        if (costs == null || costs.length == 0) return 0;
+        int n = costs.length;
+        int[][] dp = new int[n + 1][4];
+        for (int[] row : dp) Arrays.fill(row, -1);
+        return solve(costs, costs.length - 1, -1, dp);
+    }
+
+    private static int solve(int[][] cost, int index, int previousHouse, int[][] dp) {
+        if (index == 0) {
+            int minCost = Integer.MAX_VALUE;
+            for (int i = 0; i < cost[0].length; i++) {
+                if (i != previousHouse)
+                    minCost = Math.min(cost[0][i], minCost);
+            }
+            return minCost;
+        }
+
+        if (dp[index][previousHouse + 1] != -1) return dp[index][previousHouse + 1];
+
+
+        int currentCost = Integer.MAX_VALUE;
+        for (int i = 0; i < cost[0].length; i++) {
+            if (i != previousHouse)
+                currentCost = Math.min(currentCost, solve(cost, index - 1, i, dp) + cost[index][i]);
+        }
+
+        return dp[index][previousHouse + 1] = currentCost;
     }
 
     //https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts/submissions/
