@@ -104,10 +104,24 @@ public class JavaStreams {
         Map<Gender, List<Info>> genderListMap = al.stream()
                 .collect(Collectors.groupingBy(Info::getGender));
 
-        genderListMap.forEach((gender, infos) -> {
-            System.out.print(gender + " ");
-            infos.forEach(System.out::print);
-            System.out.println();
-        });
+//        genderListMap.forEach((gender, infos) -> {
+//            System.out.println(gender + " ");
+//            infos.forEach(System.out::println);
+//            System.out.println();
+//        });
+
+        //Print Oldest Female Person in the Database.
+
+        List<Info> collect = al.stream()
+                .filter(info -> info.getGender().equals(Gender.MALE))
+                .sorted(Comparator.comparing(Info::getAge).reversed())
+//                .map(info -> info.getAge())//Type cast to info if used.
+//                .max(Comparator.comparing(Info::getAge))
+                .collect(Collectors.toList());
+
+        collect.forEach(System.out::println);
+
+
+
     }
 }
