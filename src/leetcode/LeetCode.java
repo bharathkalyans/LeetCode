@@ -2,14 +2,15 @@
 package leetcode;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 
 public class LeetCode {
     public static void main(String[] args) {
-        int[][] cost = new int[][]{{14, 2, 11}, {11, 14, 5}, {14, 3, 10}};
-        System.out.println(minCost(cost));
-    }
+        List<Integer> l = new LinkedList<>();
 
+
+    }
 
     public static int minCost(int[][] costs) {
         if (costs == null || costs.length == 0) return 0;
