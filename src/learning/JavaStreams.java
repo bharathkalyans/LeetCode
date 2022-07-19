@@ -1,40 +1,7 @@
+package learning;
+
 import java.util.*;
 import java.util.stream.Collectors;
-
-enum Gender {
-    MALE, FEMALE, OTHER
-}
-
-class Info {
-    private int age;
-    private String name;
-    private Gender gender;
-
-    public int getAge() {
-        return age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + this.name + " : " +
-                this.getAge() + " : " +
-                this.getGender() + "}";
-    }
-
-    Info(int age, String name, Gender sex) {
-        this.age = age;
-        this.name = name;
-        this.gender = sex;
-    }
-}
 
 public class JavaStreams {
 
@@ -116,7 +83,7 @@ public class JavaStreams {
                 .filter(info -> info.getGender().equals(Gender.MALE))
                 .sorted(Comparator.comparing(Info::getAge).reversed())
 //                .map(info -> info.getAge())//Type cast to info if used.
-//                .max(Comparator.comparing(Info::getAge))
+//                .max(Comparator.comparing(learning.Info::getAge))
                 .collect(Collectors.toList());
 
         collect.forEach(System.out::println);

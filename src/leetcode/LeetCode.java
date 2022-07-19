@@ -2,8 +2,6 @@
 package leetcode;
 
 import java.util.*;
-import java.util.function.Consumer;
-
 
 public class LeetCode {
     public static void main(String[] args) {
