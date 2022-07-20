@@ -5,10 +5,31 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        List<Integer> l = new LinkedList<>();
-
 
     }
+
+    public int numMatchingSubsequence(String superString, String[] words) {
+        int matchingSubSequences = 0, m = superString.length();
+        HashMap<String, Integer> frequencyOfWords = new HashMap<>();
+        for (String word : words)
+            frequencyOfWords.put(word, frequencyOfWords.getOrDefault(word, 0) + 1);
+
+        //Now use the same method used in the question isSubSequence?
+
+        for (String subSequence : frequencyOfWords.keySet()){
+            int i = 0, j = 0, n = subSequence.length();
+            while (i < m && j < n){
+                if (superString.charAt(i) == subSequence.charAt(j)){
+                    j++;
+                }
+                i++;
+            }
+            if (j == n) matchingSubSequences += frequencyOfWords.get(subSequence);
+        }
+
+        return matchingSubSequences;
+    }
+
 
     public static int minCost(int[][] costs) {
         if (costs == null || costs.length == 0) return 0;
@@ -535,14 +556,14 @@ public class LeetCode {
         int minFlips = Integer.MAX_VALUE;
 
         for (int i = 1; i <= 6; i++) {
-            minFlips = Math.min(minFlips, helper(tops, bottoms, i));
-            minFlips = Math.min(minFlips, helper(bottoms, tops, i));
+            minFlips = Math.min(minFlips, generateAllSubSequences(tops, bottoms, i));
+            minFlips = Math.min(minFlips, generateAllSubSequences(bottoms, tops, i));
         }
 
         return minFlips == Integer.MAX_VALUE ? -1 : minFlips;
     }
 
-    private int helper(int[] tops, int[] bottoms, int target) {
+    private int generateAllSubSequences(int[] tops, int[] bottoms, int target) {
         int n = tops.length;
         int minFlips = 0;
 
