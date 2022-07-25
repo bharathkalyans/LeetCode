@@ -2,9 +2,30 @@
 package leetcode;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeetCode {
     public static void main(String[] args) {
+
+    }
+
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+        int m = nums1.length, n = nums2.length;
+        if (m == 1 && n == 1) return (double) (nums1[0] + nums2[0]) / 2;
+        ArrayList<Integer> al = new ArrayList<>();
+        for (int element : nums1) al.add(element);
+        for (int element : nums2) al.add(element);
+
+        Collections.sort(al);
+        int size = al.size();
+
+        if (size % 2 == 0) {
+            int middleIndex = size / 2;
+            return (double) (al.get(middleIndex) + al.get(middleIndex - 1)) / 2;
+        } else {
+            return (double) al.get(size / 2);
+        }
 
     }
 
@@ -16,10 +37,10 @@ public class LeetCode {
 
         //Now use the same method used in the question isSubSequence?
 
-        for (String subSequence : frequencyOfWords.keySet()){
+        for (String subSequence : frequencyOfWords.keySet()) {
             int i = 0, j = 0, n = subSequence.length();
-            while (i < m && j < n){
-                if (superString.charAt(i) == subSequence.charAt(j)){
+            while (i < m && j < n) {
+                if (superString.charAt(i) == subSequence.charAt(j)) {
                     j++;
                 }
                 i++;
