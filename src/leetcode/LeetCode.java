@@ -2,12 +2,39 @@
 package leetcode;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class LeetCode {
     public static void main(String[] args) {
 
     }
+
+    public List<String> findAndReplacePattern(String[] words, String pattern) {
+        List<String> result = new ArrayList<>();
+
+        int[] indexesOfPattern = new int[pattern.length()];
+        for (int i = 0; i < pattern.length(); i++)
+            indexesOfPattern[i] = pattern.indexOf(pattern.charAt(i));
+
+        for (String word : words)
+            if (isOfSamePattern(word, indexesOfPattern))
+                result.add(word);
+
+        return result;
+    }
+
+    private boolean isOfSamePattern(String word, int[] indexesOfPattern) {
+
+        int n = word.length();
+        if (n != indexesOfPattern.length) return false;
+
+        int[] indexesOfWord = new int[n];
+        for (int i = 0; i < word.length(); i++) {
+            indexesOfWord[i] = word.indexOf(word.charAt(i));
+            if (indexesOfPattern[i] != indexesOfWord[i]) return false;
+        }
+        return true;
+    }
+
 
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
