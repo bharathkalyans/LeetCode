@@ -1,13 +1,72 @@
-
 package leetcode;
 
 import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        String[] words1 = new String[]{"amazon", "apple", "facebook", "google", "leetcode"};
-        String[] words2 = new String[]{"e", "o"};
-        System.out.println(Arrays.toString(new LeetCode().wordSubsets(words1, words2).toArray()));
+        System.out.println(new LeetCode().minimumOperations(new int[]{1, 3, 5, 5}));
+    }
+
+
+    public int minimumOperations(int[] nums) {
+        int minimumOperations = 0, n = nums.length;
+        Arrays.sort(nums);
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] == 0) continue;
+            int valueToSubtract = nums[i];
+            boolean isSubtracted = false;
+            for (int j = i; j < n; j++) {
+                if (nums[j] >= valueToSubtract) {
+                    nums[j] -= valueToSubtract;
+                    isSubtracted = true;
+                }
+            }
+            Arrays.stream(nums).forEach(System.out::print);
+            System.out.println();
+            if (isSubtracted) minimumOperations++;
+        }
+        return minimumOperations;
+    }
+
+    public int shortestPath(int[][] grid, int k) {
+        int m = grid.length, n = grid[0].length;
+        int[][] visited = new int[m][n];
+        for (int[] row : visited) Arrays.fill(row, Integer.MAX_VALUE);
+        Integer[] initialValues = new Integer[]{0, 0, 0, 0};
+        Queue<Integer[]> q = new LinkedList<>();
+        q.add(initialValues);
+        visited[0][0] = 0;
+
+        //DIRECTIONS
+        int[] X = new int[]{-1, 1, 0, 0};
+        int[] Y = new int[]{0, 0, -1, 1};
+
+        while (!q.isEmpty()) {
+            Integer[] currentValues = q.remove();
+            if (currentValues[0] == m - 1 && currentValues[1] == n - 1) return currentValues[3];
+            for (int i = 0; i < X.length; i++) {
+                int newX = currentValues[0] + X[i];
+                int newY = currentValues[1] + Y[i];
+
+                if (!isInBound(newX, newY, m, n)) continue;
+
+                int newK = currentValues[2] + grid[newX][newY];
+                if (newK > k) continue;
+
+                if (visited[newX][newY] <= newK) continue;
+
+                visited[newX][newY] = newK;
+                q.add(new Integer[]{newX, newY, newK, currentValues[3] + 1});
+
+            }
+        }
+
+        return -1;
+    }
+
+    private boolean isInBound(int x, int y, int R, int C) {
+        return (x >= 0 && x < R && y >= 0 && y < C);
     }
 
     //https://leetcode.com/problems/word-subsets/
@@ -35,8 +94,7 @@ public class LeetCode {
         for (String word : words2) {
             int[] currentFrequencyOfWord = getFrequencyOfCharacters(word);
             for (int i = 0; i < 26; i++)
-                frequencyOfCharacters[i] = Math.max(
-                        frequencyOfCharacters[i], currentFrequencyOfWord[i]);
+                frequencyOfCharacters[i] = Math.max(frequencyOfCharacters[i], currentFrequencyOfWord[i]);
         }
         return frequencyOfCharacters;
     }
@@ -55,8 +113,7 @@ public class LeetCode {
             indexesOfPattern[i] = pattern.indexOf(pattern.charAt(i));
 
         for (String word : words)
-            if (isOfSamePattern(word, indexesOfPattern))
-                result.add(word);
+            if (isOfSamePattern(word, indexesOfPattern)) result.add(word);
 
         return result;
     }
@@ -130,8 +187,7 @@ public class LeetCode {
         if (index == 0) {
             int minCost = Integer.MAX_VALUE;
             for (int i = 0; i < cost[0].length; i++) {
-                if (i != previousHouse)
-                    minCost = Math.min(cost[0][i], minCost);
+                if (i != previousHouse) minCost = Math.min(cost[0][i], minCost);
             }
             return minCost;
         }
@@ -141,8 +197,7 @@ public class LeetCode {
 
         int currentCost = Integer.MAX_VALUE;
         for (int i = 0; i < cost[0].length; i++) {
-            if (i != previousHouse)
-                currentCost = Math.min(currentCost, solve(cost, index - 1, i, dp) + cost[index][i]);
+            if (i != previousHouse) currentCost = Math.min(currentCost, solve(cost, index - 1, i, dp) + cost[index][i]);
         }
 
         return dp[index][previousHouse + 1] = currentCost;
@@ -901,8 +956,7 @@ public class LeetCode {
         for (String file : files) {
             if (file.equals("")) continue;
             if (file.equals("..")) {
-                if (!s.isEmpty())
-                    s.pop();
+                if (!s.isEmpty()) s.pop();
                 continue;
             }
             if (file.equals(".")) continue;
