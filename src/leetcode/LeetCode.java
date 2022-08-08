@@ -5,29 +5,26 @@ import java.util.*;
 public class LeetCode {
     public static void main(String[] args) {
         int[] arr = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
-        System.out.println(new LeetCode().lengthOfLIS(arr));
+        int[] brr = new int[]{50, 3, 90, 60, 80};
+        System.out.println(new LeetCode().lengthOfLIS(brr));
     }
 
 
     //LIS Binary Search Approach
     public int lengthOfLIS(int[] nums) {
-        if (nums == null || nums.length == 0) return 0;
+        int n = nums.length, maxValue = 1;
+        int[] dp = new int[n];
+        Arrays.fill(dp, 1);
 
-        ArrayList<Integer> al = new ArrayList<>();
-        al.add(nums[0]);
-
-        for (int i = 1; i < nums.length; i++) {
-            if (nums[i] > al.get(al.size() - 1)) al.add(nums[i]);
-            else {
-                int index = Collections.binarySearch(al, nums[i]);
-                if (index < 0) {
-                    index = Math.abs(index) - 1;
-                }
-                al.set(index, nums[i]);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j] && dp[i] < dp[j] + 1)
+                    dp[i] = dp[j] + 1;
             }
+            maxValue = Math.max(maxValue, dp[i]);
         }
 
-        return al.size();
+        return maxValue;
     }
 
     public int minimumOperations(int[] nums) {
