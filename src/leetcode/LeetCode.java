@@ -6,25 +6,35 @@ public class LeetCode {
     public static void main(String[] args) {
         int[] arr = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
         int[] brr = new int[]{50, 3, 90, 60, 80};
-        System.out.println(new LeetCode().lengthOfLIS(brr));
+        System.out.println(new LeetCode().countOfLIS(brr));
     }
 
 
     //LIS Binary Search Approach
-    public int lengthOfLIS(int[] nums) {
-        int n = nums.length, maxValue = 1;
+    public int countOfLIS(int[] nums) {
+        int n = nums.length, maxLength = 1, total = 0;
         int[] dp = new int[n];
+        int[] count = new int[n];
         Arrays.fill(dp, 1);
+        Arrays.fill(count, 1);
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
-                if (nums[i] > nums[j] && dp[i] < dp[j] + 1)
+                if (nums[i] > nums[j] && dp[i] < dp[j] + 1) {
                     dp[i] = dp[j] + 1;
+                    count[i] = count[j];
+                } else if (nums[i] > nums[j] && dp[i] == dp[j] + 1) {
+
+                    count[i] += count[j];
+                }
             }
-            maxValue = Math.max(maxValue, dp[i]);
+            maxLength = Math.max(maxLength, dp[i]);
         }
 
-        return maxValue;
+        for (int counts : count)
+            if (counts == maxLength) total++;
+
+        return total;
     }
 
     public int minimumOperations(int[] nums) {
