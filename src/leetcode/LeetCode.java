@@ -4,9 +4,31 @@ import java.util.*;
 
 public class LeetCode {
     public static void main(String[] args) {
-        System.out.println(new LeetCode().minimumOperations(new int[]{1, 3, 5, 5}));
+        int[] arr = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
+        System.out.println(new LeetCode().lengthOfLIS(arr));
     }
 
+
+    //LIS Binary Search Approach
+    public int lengthOfLIS(int[] nums) {
+        if (nums == null || nums.length == 0) return 0;
+
+        ArrayList<Integer> al = new ArrayList<>();
+        al.add(nums[0]);
+
+        for (int i = 1; i < nums.length; i++) {
+            if (nums[i] > al.get(al.size() - 1)) al.add(nums[i]);
+            else {
+                int index = Collections.binarySearch(al, nums[i]);
+                if (index < 0) {
+                    index = Math.abs(index) - 1;
+                }
+                al.set(index, nums[i]);
+            }
+        }
+
+        return al.size();
+    }
 
     public int minimumOperations(int[] nums) {
         int minimumOperations = 0, n = nums.length;
