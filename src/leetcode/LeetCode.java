@@ -10,6 +10,41 @@ public class LeetCode {
     }
 
 
+
+    public int reachableNodes(int n, int[][] edges, int[] restricted) {
+
+        boolean[] isVisited = new boolean[n];
+        HashSet<Integer> set = new HashSet<>();
+        for (int node : restricted) set.add(node);
+        ArrayList<ArrayList<Integer>> graph = buildGraph(edges, n);
+
+        return doDFS(0, graph, set, isVisited);
+    }
+
+    private int doDFS(int source, ArrayList<ArrayList<Integer>> graph, HashSet<Integer> set, boolean[] isVisited) {
+        isVisited[source] = true;
+        int reachableNodes = 1;
+
+        for (Integer adjacentNodes : graph.get(source)) {
+            if (!isVisited[adjacentNodes] && !set.contains(adjacentNodes))
+                reachableNodes += doDFS(adjacentNodes, graph, set, isVisited);
+        }
+
+        return reachableNodes;
+    }
+
+    private ArrayList<ArrayList<Integer>> buildGraph(int[][] edges, int n) {
+        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
+        for (int i = 0; i < n; i++) graph.add(new ArrayList<Integer>());
+
+        for (int[] edge : edges) {
+            graph.get(edge[0]).add(edge[1]);
+            graph.get(edge[1]).add(edge[0]);
+        }
+
+        return graph;
+    }
+
     //LIS Binary Search Approach
     public int countOfLIS(int[] nums) {
         int n = nums.length, maxLength = 1, total = 0;
