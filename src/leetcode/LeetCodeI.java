@@ -2,14 +2,29 @@ package leetcode;
 
 import java.util.*;
 
-public class LeetCode {
+public class LeetCodeI {
+
     public static void main(String[] args) {
-        int[] arr = new int[]{10, 9, 2, 5, 3, 7, 101, 18};
-        int[] brr = new int[]{50, 3, 90, 60, 80};
-        System.out.println(new LeetCode().countOfLIS(brr));
+        System.out.println(new LeetCodeI().minSetSize(new int[]{3, 3, 3, 3, 5, 5, 5, 2, 2, 7}));
     }
 
 
+    public int minSetSize(int[] arr) {
+
+        int size = arr.length, requiredSize = size / 2, currentSize = 0, minimumSet = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int ele : arr) map.put(ele, map.getOrDefault(ele, 0) + 1);
+
+        ArrayList<Integer> al = new ArrayList<>(map.values());
+        Collections.sort(al, Collections.reverseOrder());
+        al.forEach(System.out::println);
+        while (currentSize < requiredSize) {
+            currentSize += al.remove(0);
+            minimumSet++;
+        }
+
+        return minimumSet;
+    }
 
     public int reachableNodes(int n, int[][] edges, int[] restricted) {
 
