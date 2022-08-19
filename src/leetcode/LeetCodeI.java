@@ -11,15 +11,15 @@ public class LeetCodeI {
 
     public int minSetSize(int[] arr) {
 
-        int size = arr.length, requiredSize = size / 2, currentSize = 0, minimumSet = 0;
+        int size = arr.length, requiredSize = size / 2, currentSize = 0, minimumSet = 0, index = 0;
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int ele : arr) map.put(ele, map.getOrDefault(ele, 0) + 1);
 
-        List<Integer> al = new LinkedList<>(map.values());
+        List<Integer> al = new ArrayList<>(map.values());
         al.sort(Collections.reverseOrder());
         al.forEach(System.out::println);
         while (currentSize < requiredSize) {
-            currentSize += al.remove(0);
+            currentSize += al.get(index++);
             minimumSet++;
         }
 
