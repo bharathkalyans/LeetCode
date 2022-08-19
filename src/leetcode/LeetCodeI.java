@@ -9,6 +9,32 @@ public class LeetCodeI {
     }
 
 
+
+    public boolean isPossibleDivide(int[] nums, int k) {
+        int n = nums.length;
+        if (n % k != 0) return false;
+
+        HashMap<Integer, Integer> frequencyMap = new HashMap<>();
+        for (int num : nums) frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+
+        List<Integer> sortedKeys = new ArrayList<>(frequencyMap.keySet());
+        sortedKeys.sort(Comparator.comparingInt(a -> a));
+
+        for(int key : sortedKeys){
+            int value = frequencyMap.get(key);
+            if (value == 0) continue;
+            for(int i = 1; i < k; i++){
+                int nextValue = key + i;
+                if (!frequencyMap.containsKey(nextValue)) return false;
+
+                int nextKeyFrequency = frequencyMap.get(nextValue);
+                if(nextKeyFrequency < value) return false;
+                frequencyMap.put(nextValue, nextKeyFrequency - value);
+            }
+        }
+        return true;
+    }
+
     public int minSetSize(int[] arr) {
 
         int size = arr.length, requiredSize = size / 2, currentSize = 0, minimumSet = 0, index = 0;
