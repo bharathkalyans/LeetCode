@@ -15,8 +15,8 @@ public class LeetCodeI {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int ele : arr) map.put(ele, map.getOrDefault(ele, 0) + 1);
 
-        ArrayList<Integer> al = new ArrayList<>(map.values());
-        Collections.sort(al, Collections.reverseOrder());
+        List<Integer> al = new LinkedList<>(map.values());
+        al.sort(Collections.reverseOrder());
         al.forEach(System.out::println);
         while (currentSize < requiredSize) {
             currentSize += al.remove(0);
