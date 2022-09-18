@@ -15,7 +15,17 @@ public class JavaStreams {
         al.add(new Info(28, "Taylor Swift", Gender.FEMALE));
         al.add(new Info(82, "Lisbon Eria", Gender.OTHER));
 
+
+
 //        al.forEach(System.out::println);
+
+        List<Info> eligibleVoters = al.stream()
+                .filter(ele -> ele.getAge() >= 18)
+                .collect(Collectors.toList());
+
+        long count = al.stream()
+                .filter(obj -> obj.getGender() == Gender.MALE)
+                .count();
 
         //FILTER
         List<Info> males = al.stream()

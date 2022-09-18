@@ -5,10 +5,43 @@ import java.util.*;
 public class LeetCodeI {
 
     public static void main(String[] args) {
-        System.out.println(new LeetCodeI().minSetSize(new int[]{3, 3, 3, 3, 5, 5, 5, 2, 2, 7}));
+        LeetCodeI obj = new LeetCodeI();
+        int[] a = new int[]{};
+
+    }
+
+    public int numberOfWays(int startPos, int endPos, int k) {
+        int[][] dp = new int[2000][1000];
+        for (int[] row : dp) Arrays.fill(row, Integer.MIN_VALUE);
+        return numberOfWays(startPos, endPos, k, dp);
+    }
+
+    private int numberOfWays(int startPos, int endPos, int k, int[][] dp) {
+        if (k <= 0) return startPos == endPos ? 1 : 0;
+        if (dp[startPos + 1000][k] != Integer.MIN_VALUE) return dp[startPos + 1000][k];
+        int steps = 0;
+        steps += numberOfWays(startPos - 1, endPos, k - 1);
+        steps += numberOfWays(startPos + 1, endPos, k - 1);
+        int MOD = 1_000_000_007;
+        return dp[startPos + 1000][k] = steps % MOD;
     }
 
 
+    public boolean checkDistances(String s, int[] distance) {
+
+        for (int i = 0; i < distance.length; i++) {
+            char c = (char) (i + 97);
+            System.out.println(c);
+            int first = s.indexOf(c);
+            int last = s.lastIndexOf(c);
+            System.out.println(first + " " + last);
+            if (first != -1 && last != -1) {
+                if (distance[i] != last - first - 1) return false;
+            }
+        }
+
+        return true;
+    }
 
     public boolean isPossibleDivide(int[] nums, int k) {
         int n = nums.length;
@@ -20,15 +53,15 @@ public class LeetCodeI {
         List<Integer> sortedKeys = new ArrayList<>(frequencyMap.keySet());
         sortedKeys.sort(Comparator.comparingInt(a -> a));
 
-        for(int key : sortedKeys){
+        for (int key : sortedKeys) {
             int value = frequencyMap.get(key);
             if (value == 0) continue;
-            for(int i = 1; i < k; i++){
+            for (int i = 1; i < k; i++) {
                 int nextValue = key + i;
                 if (!frequencyMap.containsKey(nextValue)) return false;
 
                 int nextKeyFrequency = frequencyMap.get(nextValue);
-                if(nextKeyFrequency < value) return false;
+                if (nextKeyFrequency < value) return false;
                 frequencyMap.put(nextValue, nextKeyFrequency - value);
             }
         }
