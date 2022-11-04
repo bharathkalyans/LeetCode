@@ -5,8 +5,41 @@ import java.util.*;
 public class LeetCodeI {
 
     public static void main(String[] args) {
-        LeetCodeI obj = new LeetCodeI();
-        int[] a = new int[]{};
+        String[] words = new String[]{"aa", "bb", "aa", "bb", "aa", "bb"};
+        System.out.println(longestPalindrome(words));
+    }
+
+    public static int longestPalindrome(String[] words) {
+        if (words == null || words.length == 0) return 0;
+
+        HashMap<String, Integer> map = new HashMap<>();
+        for (String word : words) map.put(word, map.getOrDefault(word, 0) + 1);
+        System.out.println(map);
+
+        int pairs = 0;
+        boolean canPlaceInMiddle = false;
+        for (String word : words) {
+            if (!map.containsKey(word)) continue;
+            String reversedWord = "" + word.charAt(1) + word.charAt(0);
+            if (word.equals(reversedWord)) {
+                int count = map.get(word);
+                if (count % 2 != 0) canPlaceInMiddle = true;
+                pairs += (count / 2);
+            } else {
+                if (map.get(reversedWord) != null) {
+                    int possibleInclusionPairs = Math.min(map.get(word), map.get(reversedWord));
+                    pairs += possibleInclusionPairs;
+                    map.remove(reversedWord);
+                }
+            }
+            map.remove(word);
+        }
+
+        int length = 4 * pairs;
+        if (canPlaceInMiddle)
+            length += 2;
+
+        return length;
 
     }
 
@@ -25,7 +58,6 @@ public class LeetCodeI {
         int MOD = 1_000_000_007;
         return dp[startPos + 1000][k] = steps % MOD;
     }
-
 
     public boolean checkDistances(String s, int[] distance) {
 
@@ -269,7 +301,6 @@ public class LeetCodeI {
         return true;
     }
 
-
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
 
         int m = nums1.length, n = nums2.length;
@@ -312,35 +343,6 @@ public class LeetCodeI {
         return matchingSubSequences;
     }
 
-
-    public static int minCost(int[][] costs) {
-        if (costs == null || costs.length == 0) return 0;
-        int n = costs.length;
-        int[][] dp = new int[n + 1][4];
-        for (int[] row : dp) Arrays.fill(row, -1);
-        return solve(costs, costs.length - 1, -1, dp);
-    }
-
-    private static int solve(int[][] cost, int index, int previousHouse, int[][] dp) {
-        if (index == 0) {
-            int minCost = Integer.MAX_VALUE;
-            for (int i = 0; i < cost[0].length; i++) {
-                if (i != previousHouse) minCost = Math.min(cost[0][i], minCost);
-            }
-            return minCost;
-        }
-
-        if (dp[index][previousHouse + 1] != -1) return dp[index][previousHouse + 1];
-
-
-        int currentCost = Integer.MAX_VALUE;
-        for (int i = 0; i < cost[0].length; i++) {
-            if (i != previousHouse) currentCost = Math.min(currentCost, solve(cost, index - 1, i, dp) + cost[index][i]);
-        }
-
-        return dp[index][previousHouse + 1] = currentCost;
-    }
-
     //https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts/submissions/
     public int maxArea(int h, int w, int[] horizontalCuts, int[] verticalCuts) {
 
@@ -370,7 +372,6 @@ public class LeetCodeI {
 
         return (int) (maximumHorizontal * maximumVertical % MOD);
     }
-
 
     public int[][] reconstructQueue(int[][] people) {
 
@@ -410,23 +411,6 @@ public class LeetCodeI {
         }
 
         return n - 1;
-    }
-
-    public static String greatestLetter(String s) {
-
-        System.out.println((char) (97));
-        System.out.println((char) (65));
-
-        HashSet<Character> set = new HashSet<>();
-        for (char c : s.toCharArray()) set.add(c);
-
-        for (int i = 96; i >= 65; i--) {
-            char upperCase = (char) i;
-            char lowerCase = Character.toLowerCase(upperCase);
-            if (set.contains(lowerCase) && set.contains(upperCase)) return String.valueOf(upperCase);
-        }
-
-        return "";
     }
 
     public long countSubarrays(int[] nums, long k) {
@@ -471,7 +455,6 @@ public class LeetCodeI {
 
         return result;
     }
-
 
     public boolean strongPasswordCheckerII(String password) {
 
@@ -564,41 +547,6 @@ public class LeetCodeI {
         return addingZero && addingOne;
     }
 
-    //https://leetcode.com/problems/palindromic-substrings/
-    public static int countSubstrings(String s) {
-        int n = s.length(), count = 0;
-        for (int i = 0; i < n; i++) {
-            count += countSubstrings(s, i, i);
-            count += countSubstrings(s, i, i + 1);
-        }
-        return count;
-    }
-
-    private static int countSubstrings(String s, int pivotLeft, int pivotRight) {
-        int countOfPalindromes = 0, n = s.length();
-
-        while (pivotLeft >= 0 && pivotRight < n && s.charAt(pivotLeft) == s.charAt(pivotRight)) {
-            countOfPalindromes++;
-            pivotLeft--;
-            pivotRight++;
-        }
-
-        return countOfPalindromes;
-    }
-
-    public static String removeDigit(String number, char digit) {
-        List<String> l = new ArrayList<>();
-
-        for (int i = 0; i < number.length(); i++) {
-            if (number.charAt(i) == digit) {
-                String tempNumber = number.substring(0, i) + number.substring(i + 1);
-                l.add(tempNumber);
-            }
-        }
-        Collections.sort(l);
-        return l.get(l.size() - 1);
-    }
-
     //https://leetcode.com/problems/backspace-string-compare/discuss/?currentPage=1&orderBy=most_votes&query=
     public boolean backspaceCompare(String s, String t) {
         StringBuilder sb1 = new StringBuilder();
@@ -619,35 +567,6 @@ public class LeetCodeI {
         }
 
         return sb1.toString().equals(sb2.toString());
-    }
-
-    public static List<Long> maxSubSetSum(List<Integer> k) {
-        int n = k.size();
-        List<Long> l = new ArrayList<Long>(n);
-        for (Integer integer : k) {
-            l.add(getFactorsSum(integer));
-        }
-        return l;
-    }
-
-    private static Long getFactorsSum(int integer) {
-        long sum = 0;
-        for (int i = 1; i <= integer; i++) {
-            if (integer % i == 0) sum += i;
-        }
-        return sum;
-    }
-
-    public static int getTriangleArea(List<Integer> x, List<Integer> y) {
-
-        int aX = x.get(0);
-        int aY = y.get(0);
-        int bX = x.get(1);
-        int bY = y.get(1);
-        int cX = x.get(2);
-        int cY = y.get(2);
-
-        return Math.abs((aX * (bY - cY) + bX * (cY - aY) + cX * (aY - bY))) / 2;
     }
 
     public int minimumRounds(int[] tasks) {
@@ -790,7 +709,6 @@ public class LeetCodeI {
         // As you are done dividing by 2!
         return operations + startValue - target;
     }
-
 
     //https://leetcode.com/problems/smallest-string-with-a-given-numeric-value/
     public String getSmallestString(int n, int k) {
@@ -1007,7 +925,6 @@ public class LeetCodeI {
         return matrix;
     }
 
-
     //https://leetcode.com/problems/spiral-matrix/submissions/
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> result = new ArrayList<>();
@@ -1038,50 +955,6 @@ public class LeetCodeI {
         }
         return result;
     }
-
-    //https://www.hackerrank.com/challenges/journey-to-the-moon/problem
-    private static ArrayList<ArrayList<Integer>> buildGraph(List<List<Integer>> astronaut, int n) {
-        ArrayList<ArrayList<Integer>> graph = new ArrayList<>();
-        for (int i = 0; i < n; i++)
-            graph.add(new ArrayList<>());
-        for (List<Integer> pair : astronaut) {
-            graph.get(pair.get(0)).add(pair.get(1));
-            graph.get(pair.get(1)).add(pair.get(0));
-        }
-        return graph;
-    }
-
-    public static int journeyToMoon(int n, List<List<Integer>> astronaut) {
-        ArrayList<ArrayList<Integer>> graph = buildGraph(astronaut, n);
-        boolean isVisited[] = new boolean[n];
-        ArrayList<Integer> people = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            if (!isVisited[i]) {
-                people.add(doDFS(i, graph, isVisited));
-            }
-        }
-
-        int sum = 0;
-        int result = 0;
-        for (int size : people) {
-            result += sum * size;
-            sum += size;
-        }
-        return result;
-    }
-
-    private static Integer doDFS(int vertice, ArrayList<ArrayList<Integer>> graph, boolean[] isVisited) {
-        isVisited[vertice] = true;
-        int nodes = 1;
-
-        for (int adjacentNode : graph.get(vertice)) {
-            if (!isVisited[adjacentNode]) {
-                nodes += doDFS(adjacentNode, graph, isVisited);
-            }
-        }
-        return nodes;
-    }
-
 
     //https://leetcode.com/problems/simplify-path/submissions/
     public String simplifyPath(String path) {
@@ -1177,7 +1050,6 @@ public class LeetCodeI {
         }
         return DP[maxElement];
     }
-
 
     //https://leetcode.com/problems/champagne-tower/submissions/
     public double champagneTower(int poured, int query_row, int query_glass) {
@@ -1300,7 +1172,6 @@ public class LeetCodeI {
         return result;
     }
 
-
     //https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/
     public String removeDuplicates(String s, int k) {
 
@@ -1397,43 +1268,6 @@ public class LeetCodeI {
             }
         }
         return interval.size();
-    }
-
-
-    //https://leetcode.com/problems/remove-k-digits/
-    public static String removeKDigits(String str, int k) {
-
-        char[] nums = str.toCharArray();
-
-        Stack<Character> st = new Stack<>();
-
-        //14399800
-        // 1 3 9 9 8 0 0
-        for (char num : nums) {
-            // remove strictly decreasing sequence
-            while (!st.isEmpty() && st.peek() > num && k > 0) {
-                st.pop();
-                k--;
-            }
-
-            // prevent leading zeros
-            if (st.isEmpty() && num == '0') continue;
-            st.push(num);
-        }
-
-        // k is not zero then remove last digits from the sequence
-        while (!st.isEmpty() && k-- > 0) {
-            st.pop();
-        }
-
-        if (st.isEmpty()) return "0";
-
-        StringBuilder sb = new StringBuilder();
-
-        while (!st.isEmpty()) sb.append(st.pop());
-
-        return sb.reverse().toString();
-
     }
 
 }
